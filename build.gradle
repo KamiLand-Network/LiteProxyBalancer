@@ -1,0 +1,67 @@
+plugins {
+    id "java-library"
+    id "com.gradleup.shadow" version "8.3.5"
+}
+
+allprojects {
+    group = "net.kamiland"
+    version = "dev-0.1"
+    description = "Lightweight and fast proxy balancer for proxied servers"
+    java.sourceCompatibility = JavaVersion.VERSION_17
+    java.targetCompatibility = JavaVersion.VERSION_17
+
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        mavenCentral()
+
+        // Both
+        maven { url "https://repo.panda-lang.org/releases" }
+        maven { url "https://jitpack.io" }
+
+        // Paper
+        maven { url "https://repo.papermc.io/repository/maven-public/" }
+        maven { url "https://repo.extendedclip.com/releases/" }
+
+        // Bungeecord
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+        maven { url "https://libraries.minecaft.net" }
+
+        maven { url "https://repo.diogotc.com/releases" }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+        options.compilerArgs.add("-parameters")
+    }
+}
+
+subprojects {
+    apply plugin: "java-library"
+    apply plugin: "com.gradleup.shadow"
+
+    artifacts {
+        archives shadowJar
+    }
+}
+
+dependencies {
+    api(project(path: ":bungee", configuration: "shadow"))
+    api(project(path: ":paper", configuration: "shadow"))
+}
+
+shadowJar {
+    archiveBaseName.set("LiteProxyBalancer")
+    archiveClassifier.set("")
+    archiveVersion.set(version as String)
+
+    exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
+    mergeServiceFiles()
+    minimize()
+}
+
+tasks.build {
+    dependsOn(shadowJar)
+}

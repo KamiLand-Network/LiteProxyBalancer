@@ -1,0 +1,36 @@
+plugins {
+    id "de.eldoria.plugin-yml.bukkit" version "0.7.1"
+}
+
+bukkit {
+    name = "LiteProxyBalancer"
+    main = "net.kamiland.liteproxybalancer.LiteProxyBalancer"
+    version = project.version
+    apiVersion = "1.13"
+
+    load = "STARTUP"
+    foliaSupported = true
+
+    authors = ["KamiLand", "while1cry"]
+    website = "https://www.kamiland.net/"
+    description = project.description
+
+    softDepend = ["PlaceholderAPI"]
+}
+
+dependencies {
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
+    compileOnly("org.jetbrains:annotations:24.1.0")
+    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+
+    implementation("dev.rollczi:litecommands-bukkit:3.10.0")
+
+    compileOnly("me.clip:placeholderapi:2.11.6")
+}
+
+shadowJar {
+    relocate("dev.rollczi", "net.kamiland.aegis.lib.dev.rollczi")
+    relocate("org.intellij", "net.kamiland.aegis.lib.org.intellij")
+    relocate("org.jetbrains", "net.kamiland.aegis.lib.org.jetbrains")
+}

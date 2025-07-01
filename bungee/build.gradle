@@ -1,0 +1,27 @@
+plugins {
+    id "de.eldoria.plugin-yml.bungee" version "0.7.1"
+}
+
+bungee {
+    name = "LiteProxyBalancer"
+    main = "net.kamiland.liteproxybalancer_bungee.LiteProxyBalancer"
+    version = project.version
+
+    author = "[KamiLand, while1cry]"
+    description = project.description
+}
+
+dependencies {
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
+    compileOnly("org.jetbrains:annotations:24.1.0")
+
+    compileOnly("net.md-5:bungeecord-api:1.21-R0.4-SNAPSHOT")
+
+    implementation("dev.rollczi:litecommands-bungeecord:3.10.0")
+
+    compileOnly("com.rexcantor64.triton:triton-api:3.12.0")
+
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+}
